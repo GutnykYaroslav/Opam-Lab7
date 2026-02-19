@@ -6,9 +6,14 @@
 
         for (int i = 1; i <= 5; i++)
         {
-            actions.Add(() => Console.WriteLine(i));
+           
+            int temp = i;
+
+            actions.Add(() => Console.WriteLine(temp));
         }
 
+        
+        Console.WriteLine("Результат виконання:");
         foreach (var action in actions)
         {
             action();
