@@ -1,22 +1,29 @@
-﻿class Program
+﻿class BankTerminal
+{
+ 
+    public Action<int> OnMoneyWithdraw;
+
+    public void Withdraw(int amount)
+    {
+        OnMoneyWithdraw?.Invoke(amount);
+    }
+}
+
+class Program
 {
     static void Main()
     {
-        List<Action> actions = new List<Action>();
-
-        for (int i = 1; i <= 5; i++)
-        {
-           
-            int temp = i;
-
-            actions.Add(() => Console.WriteLine(temp));
-        }
+        BankTerminal terminal = new BankTerminal();
 
         
-        Console.WriteLine("Результат виконання:");
-        foreach (var action in actions)
-        {
-            action();
-        }
+        terminal.OnMoneyWithdraw += amount => Console.WriteLine($"Знято {amount} грн");
+
+        terminal.Withdraw(500);
+
+        
+        terminal.OnMoneyWithdraw = null;
+
+      
+        terminal.OnMoneyWithdraw?.Invoke(1000);
     }
 }
