@@ -1,24 +1,29 @@
-﻿using System;
-
-namespace opam_lab7
+﻿class Program
 {
-    class Program
+    static void Main()
     {
-        static void Main()
+        
+        Func<double, double> discountCalculator = null;
+
+        
+        discountCalculator += price => price * 0.95; 
+        discountCalculator += price => price * 0.90; 
+        discountCalculator += price => price - 100;  
+
+        double price = 1000;
+
+       
+        if (discountCalculator != null)
         {
            
-            Func<double, double> discountCalculator = null;
-
-           
-            discountCalculator += price => price * 0.95;  
-            discountCalculator += price => price * 0.90; 
-            discountCalculator += price => price - 100;   
-
-            
-            double price = discountCalculator(1000);
-
-           
-            Console.WriteLine(price);
+            foreach (Func<double, double> func in discountCalculator.GetInvocationList())
+            {
+                
+                price = func(price);
+            }
         }
+
+       
+        Console.WriteLine($"{price}");
     }
 }
